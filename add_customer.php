@@ -57,25 +57,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         exit();
     }
 }
-
-//We are using same form for adding and editing. This is a create form so declare $edit = false.
-$edit = false;
-
-require_once 'includes/header.php';
 ?>
-<div id="page-wrapper">
-<div class="row">
-     <div class="col-lg-12">
-            <h2 class="page-header">Add Customers</h2>
-        </div>
-
-</div>
-    <form class="form" action="" method="post"  id="customer_form" enctype="multipart/form-data">
-       <?php  include_once('./forms/customer_form.php'); ?>
-    </form>
-</div>
-
-
-
-
 <?php include_once 'includes/footer.php'; ?>

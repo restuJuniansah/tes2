@@ -1,65 +1,53 @@
 <fieldset>
     <div class="form-group">
-        <label for="f_name">First Name *</label>
-          <input type="text" name="f_name" value="<?php echo htmlspecialchars($edit ? $customer['f_name'] : '', ENT_QUOTES, 'UTF-8'); ?>" placeholder="First Name" class="form-control" required="required" id = "f_name" >
-    </div> 
+        <label>Nama Driver</label>
+          <input type="text" name="driver_name" value="<?php echo htmlspecialchars($customer['driver_name']); ?>" class="form-control" required="required">
+    </div>
 
+    <label>Channel Transaksi</label><br>
     <div class="form-group">
-        <label for="l_name">Last name *</label>
-        <input type="text" name="l_name" value="<?php echo htmlspecialchars($edit ? $customer['l_name'] : '', ENT_QUOTES, 'UTF-8'); ?>" placeholder="Last Name" class="form-control" required="required" id="l_name">
-    </div> 
-
-    <div class="form-group">
-        <label>Gender * </label>
-        <label class="radio-inline">
-            <input type="radio" name="gender" value="male" <?php echo ($edit &&$customer['gender'] =='male') ? "checked": "" ; ?> required="required"/> Male
-        </label>
-        <label class="radio-inline">
-            <input type="radio" name="gender" value="female" <?php echo ($edit && $customer['gender'] =='female')? "checked": "" ; ?> required="required" id="female"/> Female
-        </label>
+      <label class="radio-inline">
+        <input type="radio" name="driver_channel" value="Gojek" <?php echo ($customer['driver_channel'] =='Gojek') ? "checked": "" ; ?>>Gojek
+      </label>
+      <label class="radio-inline">
+        <input type="radio" name="driver_channel" value="Grab" <?php echo ($customer['driver_channel'] =='Grab') ? "checked": "" ; ?>>Grab
+      </label>
+      <label class="radio-inline">
+        <input type="radio" name="driver_channel" value="Grab Pesan Sekaligus" <?php echo ($customer['driver_channel'] =='Grab Pesan Sekaligus') ? "checked": "" ; ?>>Grab Pesan Sekaligus
+      </label>
+      <label class="radio-inline">
+        <input type="radio" name="driver_channel" value="Walk In" <?php echo ($customer['driver_channel'] =='Walk In') ? "checked": "" ; ?> autocomplete="off">Walk In
+      </label>
+      <label class="radio-inline">
+        <input type="radio" name="driver_channel" value="E-Commerce" <?php echo ($customer['driver_channel'] =='E-Commerce') ? "checked": "" ; ?> autocomplete="off">E-Commerce
+      </label>
+      <label class="radio-inline">
+        <input type="radio" name="driver_channel" value="KKO" <?php echo ($customer['driver_channel'] =='KKO') ? "checked": "" ; ?> autocomplete="off">KKO
+      </label>
     </div>
 
     <div class="form-group">
-        <label for="address">Address</label>
-          <textarea name="address" placeholder="Address" class="form-control" id="address"><?php echo htmlspecialchars(($edit) ? $customer['address'] : '', ENT_QUOTES, 'UTF-8'); ?></textarea>
-    </div> 
-    
-    <div class="form-group">
-        <label>State </label>
-           <?php $opt_arr = array("Maharashtra", "Kerala", "Madhya pradesh"); 
-                            ?>
-            <select name="state" class="form-control selectpicker" required>
-                <option value=" " >Please select your state</option>
-                <?php
-                foreach ($opt_arr as $opt) {
-                    if ($edit && $opt == $customer['state']) {
-                        $sel = "selected";
-                    } else {
-                        $sel = "";
-                    }
-                    echo '<option value="'.$opt.'"' . $sel . '>' . $opt . '</option>';
-                }
-
-                ?>
-            </select>
-    </div>  
-    <div class="form-group">
-        <label for="email">Email</label>
-            <input  type="email" name="email" value="<?php echo htmlspecialchars($edit ? $customer['email'] : '', ENT_QUOTES, 'UTF-8'); ?>" placeholder="E-Mail Address" class="form-control" id="email">
+      <label>Nama Merchant</label>
+      <input type="text" class="form-control" name="merchant_name" value="<?php echo htmlspecialchars($customer['merchant_name']); ?>">
     </div>
 
     <div class="form-group">
-        <label for="phone">Phone</label>
-            <input name="phone" value="<?php echo htmlspecialchars($edit ? $customer['phone'] : '', ENT_QUOTES, 'UTF-8'); ?>" placeholder="987654321" class="form-control"  type="text" id="phone">
-    </div> 
+      <label>Total Harga di Aplikasi</label>
+      <input type="number" class="form-control" name="gmv" value="<?php echo htmlspecialchars($customer['gmv']); ?>">
+    </div>
 
     <div class="form-group">
-        <label>Date of birth</label>
-        <input name="date_of_birth" value="<?php echo htmlspecialchars($edit ? $customer['date_of_birth'] : '', ENT_QUOTES, 'UTF-8'); ?>"  placeholder="Birth date" class="form-control"  type="date">
+      <label>Kecamatan</label>
+      <input type="text" class="form-control" name="kecamatan" value="<?php echo htmlspecialchars($customer['kecamatan']); ?>">
+    </div>
+
+    <div class="form-group">
+      <label>Kelurahan</label>
+      <input type="text" class="form-control" name="kelurahan" value="<?php echo htmlspecialchars($customer['kelurahan']); ?>">
     </div>
 
     <div class="form-group text-center">
         <label></label>
         <button type="submit" class="btn btn-warning" >Save <span class="glyphicon glyphicon-send"></span></button>
-    </div>            
+    </div>
 </fieldset>

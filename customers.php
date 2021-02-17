@@ -38,8 +38,8 @@ $select = array('transaksi_id', 'driver_name', 'driver_channel', 'number', 'crea
 //Start building query according to input parameters.
 // If search string
 if ($search_string) {
-	$db->where('f_name', '%' . $search_string . '%', 'like');
-	$db->orwhere('l_name', '%' . $search_string . '%', 'like');
+	$db->where('driver_name', '%' . $search_string . '%', 'like');
+	$db->orwhere('driver_channel', '%' . $search_string . '%', 'like');
 }
 
 //If order by option selected
@@ -99,40 +99,34 @@ include BASE_PATH . '/includes/header.php';
 								<input type="text" class="form-control" name="driver_name" id="namadriver" placeholder="Nama Driver">
 							</div>
 
-<!--							<label>Channel Transaksi</label><br> -->
-
-								<div class="form-group">
-									<label for="namadriver">Channel Transaksi</label>
-									<input type="text" class="form-control" name="driver_channel" id="namadriver" placeholder="Nama Driver" value="required">
-								</div>
-
-					<!--		<div class="btn-group-toggle" data-toggle="buttons">
+								<label>Channel Transaksi</label><br>
+								<div class="form-group btn-group-toggle" data-toggle="buttons">
 								<label class="btn btn-primary">
-									<input type="radio" name="driver_channel" id="Gojek" autocomplete="off">Gojek
+									<input type="radio" name="driver_channel" value="Gojek" autocomplete="off">Gojek
 								</label>
 								<label class="btn btn-primary">
-									<input type="radio" name="driver_channel" id="Grab" autocomplete="off">Grab
+									<input type="radio" name="driver_channel" value="Grab" autocomplete="off">Grab
 								</label>
 								<label class="btn btn-primary">
-									<input type="radio" name="driver_channel" id="GrabPesanSekaligus" autocomplete="off">Grab Pesan Sekaligus
+									<input type="radio" name="driver_channel" value="Grab Pesan Sekaligus" autocomplete="off">Grab Pesan Sekaligus
 								</label>
 								<label class="btn btn-primary">
-									<input type="radio" name="driver_channel" id="Walkin" autocomplete="off">Walk In
+									<input type="radio" name="driver_channel" value="Walk In" autocomplete="off">Walk In
 								</label>
 								<label class="btn btn-primary">
-									<input type="radio" name="driver_channel" id="Ecommerce" autocomplete="off">E-Commerce
+									<input type="radio" name="driver_channel" value="E-Commerce" autocomplete="off">E-Commerce
 								</label>
 								<label class="btn btn-primary">
-									<input type="radio" name="driver_channel" id="KKO" autocomplete="off">KKO
+									<input type="radio" name="driver_channel" value="KKO" autocomplete="off">KKO
 								</label>
 							</div>
 							<br>
--->
+
 							<div class="form-group">
 								<label>Nomor Urut</label>
 								<input type="number" class="form-control" name="number" id="nourut" placeholder="Nomor Urut" required="required">
 							</div>
-							<?php echo "tanggal".$date?>
+
 							<div class="form-group hidden">
 								<input type="text" class="form-control" name="created_date" value="<?php echo $date?>">
 							</div>
@@ -185,9 +179,19 @@ include BASE_PATH . '/includes/header.php';
 								<input type="text" class="form-control" name="kelurahan" value="<?php echo (isset($date))?$date:'';?>">
 							</div>
 
-							<div class="form-group hidden">
-								<input type="text" class="form-control" name="building_name" value="<?php echo (isset($date))?$date:'';?>">
+							<label>Jenis Building</label><br>
+							<div class="form-group btn-group-toggle" data-toggle="buttons">
+							<label class="btn btn-primary">
+								<input type="radio" name="building_name" value="Perumahan" autocomplete="off">Perumahan
+							</label>
+							<label class="btn btn-primary">
+								<input type="radio" name="building_name" value="Kantor" autocomplete="off">Kantor
+							</label>
+							<label class="btn btn-primary">
+								<input type="radio" name="building_name" value="Apartemen" autocomplete="off">Apartemen
+							</label>
 							</div>
+							<br>
 
 							<div class="form-group">
 								<label>Foto Harga Orderan</label>
@@ -197,18 +201,6 @@ include BASE_PATH . '/includes/header.php';
 							<div class="form-group">
 								<label>Foto Alamat Pengirim</label>
 								<input name="destination_picture" type="file" accept="image/*">
-							</div>
-
-							<div class="form-group hidden">
-								<input type="text" class="form-control" name="updated_date" value="<?php echo $updatetime?>">
-							</div>
-
-							<div class="form-group hidden">
-								<input type="text" class="form-control" name="created_by" value="me">
-							</div>
-
-							<div class="form-group hidden">
-								<input type="text" class="form-control" name="updated_by" value="someone">
 							</div>
 		      </div>
 		      <div class="modal-footer">
@@ -309,7 +301,7 @@ if ($order_by == 'Desc') {
 							<td><?php echo xss_clean($row['created_by']); ?></td>
 							<td><?php echo xss_clean($row['updated_by']); ?></td>
                 <td>
-                    <a href="edit_customer.php?customer_id=<?php echo $row['transaksi_id']; ?>&operation=edit" class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
+                    <a href="edit_customer.php?transaksis_id=<?php echo $row['transaksi_id']; ?>&operation=edit" class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
                     <a href="#" class="btn btn-danger delete_btn" data-toggle="modal" data-target="#confirm-delete-<?php echo $row['transaksi_id']; ?>"><i class="glyphicon glyphicon-trash"></i></a>
                 </td>
             </tr>
