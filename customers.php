@@ -72,6 +72,7 @@ include BASE_PATH . '/includes/header.php';
             </div>
         </div>
     </div>
+
     <?php include BASE_PATH . '/includes/flash_messages.php';?>
 
 		<!-- Modal -->
@@ -87,7 +88,7 @@ include BASE_PATH . '/includes/header.php';
 		      <div class="modal-body">
 
 <!-- form -->
-						<form method="post" action="add_customer.php" enctype="multipart/form-data">
+						<form method="post" id="addform" action="add_customer.php" enctype="multipart/form-data">
 
 							<div class="form-group hidden">
 								<input type="text" class="form-control" name="transaksi_id" value="<?php echo (isset($transaksi_id))?$transaksi_id:'';?>">
@@ -95,7 +96,7 @@ include BASE_PATH . '/includes/header.php';
 
 							<div class="form-group">
 								<label for="namadriver">Nama Driver</label>
-								<input type="text" class="form-control" name="driver_name" id="namadriver" placeholder="Nama Driver" required="required">
+								<input type="text" class="form-control" name="driver_name" id="namadriver" placeholder="Nama Driver">
 							</div>
 
 <!--							<label>Channel Transaksi</label><br> -->
@@ -314,21 +315,21 @@ if ($order_by == 'Desc') {
             </tr>
             <!-- Delete Confirmation Modal -->
             <div class="modal fade" id="confirm-delete-<?php echo $row['transaksi_id']; ?>" role="dialog">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-sm">
                     <form action="delete_customer.php" method="POST">
                         <!-- Modal content -->
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">Confirm</h4>
+                                <h3 class="modal-title text-center">Hapus Data</h3>
                             </div>
                             <div class="modal-body">
                                 <input type="hidden" name="del_id" id="del_id" value="<?php echo $row['transaksi_id']; ?>">
-                                <p>Are you sure you want to delete this row?</p>
+                                <p>Apakah Anda Mau Menghapus Data Ini ?</p>
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-default pull-left">Yes</button>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                                <button type="submit" class="btn btn-success">Ya</button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Tidak</button>
                             </div>
                         </div>
                     </form>
@@ -348,4 +349,22 @@ if ($order_by == 'Desc') {
     <!-- //Pagination -->
 </div>
 <!-- //Main container -->
+
+<script type="text/javascript">
+$(document).ready(function(){
+   $("#addform").validate({
+       rules: {
+            driver_name: {
+                required: true,
+                minlength: 3
+            },
+            l_name: {
+                required: true,
+                minlength: 3
+            },
+        }
+    });
+});
+</script>
+
 <?php include BASE_PATH . '/includes/footer.php';?>

@@ -39,6 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     //Insert timestamp
     $data_to_store['receipt_picture'] = $dst_db;
     $data_to_store['destination_picture'] = $dstt_db;
+    $data_to_store['created_by']= $_SESSION['users_name'];
 
     $db = getDbInstance();
 
@@ -46,13 +47,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 
     if($last_id)
     {
-    	$_SESSION['success'] = "Customer added successfully!";
+    	$_SESSION['success'] = "Data Berhasil Di Simpan!";
     	header('location: customers.php');
     	exit();
     }
     else
     {
-        echo 'insert failed: ' . $db->getLastError();
+        echo 'Data Gagal Di Simpan: ' . $db->getLastError();
         exit();
     }
 }
@@ -75,21 +76,6 @@ require_once 'includes/header.php';
 </div>
 
 
-<script type="text/javascript">
-$(document).ready(function(){
-   $("#customer_form").validate({
-       rules: {
-            f_name: {
-                required: true,
-                minlength: 3
-            },
-            l_name: {
-                required: true,
-                minlength: 3
-            },
-        }
-    });
-});
-</script>
+
 
 <?php include_once 'includes/footer.php'; ?>
