@@ -86,6 +86,7 @@ include BASE_PATH . '/includes/header.php';
 		      </div>
 		      <div class="modal-body">
 
+<!-- form -->
 						<form method="post" action="add_customer.php" enctype="multipart/form-data">
 
 							<div class="form-group hidden">
@@ -194,7 +195,7 @@ include BASE_PATH . '/includes/header.php';
 
 							<div class="form-group">
 								<label>Foto Alamat Pengirim</label>
-								<input id="input-b1" name="destination_picture" type="file" class="file" accept="image/*" data-browse-on-zone-click="true">
+								<input name="destination_picture" type="file" accept="image/*">
 							</div>
 
 							<div class="form-group hidden">
@@ -301,9 +302,8 @@ if ($order_by == 'Desc') {
 							<td><?php echo xss_clean($row['kecamatan']); ?></td>
 							<td><?php echo xss_clean($row['kelurahan']); ?></td>
 							<td><?php echo xss_clean($row['building_name']); ?></td>
-							<?php $imageurl='./assets/img'.$row["receipt_picture"];?>
-							<td><img src="<?php echo xss_clean($imageurl); ?>"</td>
-							<td><?php echo xss_clean($row['destination_picture']); ?></td>
+							<td><img src="<?php echo $row['receipt_picture']; ?>" width="100" height="100"></td>
+							<td><img src="<?php echo $row['destination_picture']; ?>" width="100" height="100"></td>
 							<td><?php echo xss_clean($row['updated_date']); ?></td>
 							<td><?php echo xss_clean($row['created_by']); ?></td>
 							<td><?php echo xss_clean($row['updated_by']); ?></td>

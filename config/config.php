@@ -27,19 +27,4 @@ define('DB_NAME', "corephpadmin");
 function getDbInstance() {
 	return new MysqliDb(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 }
-
-/*
-|--------------------------------------------------------------------------
-| DATABASE CONFIGURATION
-|--------------------------------------------------------------------------
- */
-/*
- $servername='localhost';
- $username='root';
- $password='';
- $dbname = "corephpadmin";
-	$db=mysqli_connect($servername,$username,$password,$dbname);
-	if(!$db){
-		die('Could not Connect My Sql:' .mysql_error());
-}
-*/
+?>
