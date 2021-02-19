@@ -15,20 +15,52 @@ if ($del_id && $_SERVER['REQUEST_METHOD'] == 'POST')
     $customer_id = $del_id;
 
     $db = getDbInstance();
+
     $db->where('transaksi_id', $customer_id);
-    $status = $db->delete('per_transaction_gmv');
+		$customer = $db->getOne("per_transaction_gmv");
+		$status = unlink($customer['receipt_picture']) && unlink($customer['destination_picture']); //hapus picture di folder
+		//$status = $db->delete('per_transaction_gmv');
 
     if ($status)
     {
-        $_SESSION['info'] = "Customer deleted successfully!";
-        header('location: customers.php');
-        exit;
+				$db = getDbInstance();
+
+	    	$db->where('transaksi_id', $customer_id);
+				$delete = $db->delete('per_transaction_gmv'); //delete data
+
+				if ($delete)
+				{
+					$_SESSION['info'] = "Customer deleted successfully!";
+	        header('location: customers.php');
+	        exit;
+				}
+				else
+				{
+					$_SESSION['failure'] = "Unable to delete customer";
+		    	header('location: customers.php');
+		      exit;
+				}
+
     }
     else
     {
-    	$_SESSION['failure'] = "Unable to delete customer";
-    	header('location: customers.php');
-        exit;
+			$db = getDbInstance();
+
+			$db->where('transaksi_id', $customer_id);
+			$delete = $db->delete('per_transaction_gmv'); //delete data
+			
+			if ($delete)
+			{
+				$_SESSION['info'] = "Customer deleted successfully!";
+				header('location: customers.php');
+				exit;
+			}
+			else
+			{
+				$_SESSION['failure'] = "Unable to delete customer";
+				header('location: customers.php');
+				exit;
+			}
 
     }
 

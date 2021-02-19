@@ -9,7 +9,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Administrator</title>
+        <title>Kita Kitchen</title>
 
         <!-- Bootstrap Core CSS -->
         <link  rel="stylesheet" href="assets/css/bootstrap.min.css"/>
@@ -64,7 +64,7 @@
                                 <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                                 </li>
                                 <li class="divider"></li>
-                                <li><a href="logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                                <li><a href="logout.php"><i class="fa fa-sign-out fa-fw"></i> Keluar</a>
                                 </li>
                             </ul>
                             <!-- /.dropdown-user -->
@@ -81,14 +81,11 @@
                                 </li>
 
                                 <li <?php echo (CURRENT_PAGE == "customers.php" || CURRENT_PAGE == "add_customer.php") ? 'class="active"' : ''; ?>>
-                                    <a href="#"><i class="fa fa-user-circle fa-fw"></i> Customers<span class="fa arrow"></span></a>
+                                    <a href="#"><i class="fa fa-user-circle fa-fw"></i> Data Transaksi<span class="fa arrow"></span></a>
                                     <ul class="nav nav-second-level">
                                         <li>
-                                            <a href="customers.php"><i class="fa fa-list fa-fw"></i>List all</a>
+                                            <a href="customers.php"><i class="fa fa-list fa-fw"></i>Lihat Semua</a>
                                         </li>
-                                    <li>
-                                        <a href="add_customer.php"><i class="fa fa-plus fa-fw"></i>Add New</a>
-                                    </li>
                                     </ul>
                                 </li>
                                 <li>
@@ -100,5 +97,8 @@
                     </div>
                     <!-- /.navbar-static-side -->
                 </nav>
+
+
+
             <?php endif;?>
             <!-- The End of the Header -->

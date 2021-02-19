@@ -14,7 +14,7 @@ $filter_col = filter_input(INPUT_GET, 'filter_col');
 $order_by = filter_input(INPUT_GET, 'order_by');
 
 // Per page limit for pagination.
-$pagelimit = 15;
+$pagelimit = 5;
 
 // Get current page.
 $page = filter_input(INPUT_GET, 'page');
@@ -24,7 +24,7 @@ if (!$page) {
 
 // If filter types are not selected we show latest added data first
 if (!$filter_col) {
-	$filter_col = 'transaksi_id';
+	$filter_col = 'created_date';
 }
 if (!$order_by) {
 	$order_by = 'Desc';
@@ -40,6 +40,13 @@ $select = array('transaksi_id', 'driver_name', 'driver_channel', 'number', 'crea
 if ($search_string) {
 	$db->where('driver_name', '%' . $search_string . '%', 'like');
 	$db->orwhere('driver_channel', '%' . $search_string . '%', 'like');
+	$db->orwhere('store_name', '%' . $search_string . '%', 'like');
+	$db->orwhere('brand_name', '%' . $search_string . '%', 'like');
+	$db->orwhere('kecamatan', '%' . $search_string . '%', 'like');
+	$db->orwhere('kelurahan', '%' . $search_string . '%', 'like');
+	$db->orwhere('building_name', '%' . $search_string . '%', 'like');
+	$db->orwhere('created_by', '%' . $search_string . '%', 'like');
+	$db->orwhere('updated_by', '%' . $search_string . '%', 'like');
 }
 
 //If order by option selected
@@ -64,18 +71,18 @@ include BASE_PATH . '/includes/header.php';
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-6">
-            <h1 class="page-header">Customers</h1>
+            <h1 class="page-header">Data Transaksi</h1>
         </div>
         <div class="col-lg-6">
             <div class="page-action-links text-right">
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#add-datamodal"><i class="glyphicon glyphicon-plus"></i> Add new</button>
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#add-datamodal"><i class="glyphicon glyphicon-plus"></i> Tambah Data Baru</button>
             </div>
         </div>
     </div>
 
     <?php include BASE_PATH . '/includes/flash_messages.php';?>
 
-		<!-- Modal -->
+		<!-- Modal add form-->
 		<div class="modal fade" id="add-datamodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
@@ -195,16 +202,19 @@ include BASE_PATH . '/includes/header.php';
 
 							<div class="form-group">
 								<label>Foto Harga Orderan</label>
-								<input name="receipt_picture" type="file" accept="image/*">
+								<input name="receipt_picture" type="file" accept="image/*" id="image-source" onchange="previewImage();">
+								<img src="https://www.btklsby.go.id/images/placeholder/camera.jpg" id="image-preview" class="img-thumbnail center-block" width="50%">
 							</div>
 
 							<div class="form-group">
-								<label>Foto Alamat Pengirim</label>
-								<input name="destination_picture" type="file" accept="image/*">
+								<label>Foto Alamat Pengiriman</label>
+								<input name="destination_picture" type="file" accept="image/*" id="image-sources" onchange="previewImages();">
+								<img src="https://www.btklsby.go.id/images/placeholder/camera.jpg" id="image-previews" class="img-thumbnail center-block" width="50%">
 							</div>
+
 		      </div>
 		      <div class="modal-footer">
-		        <button type="submit" class="btn btn-warning center-block" name="save"><span class="glyphicon glyphicon-save"> Simpan</button>
+		        <button type="submit" class="btn btn-warning center-block" name="save">Simpan <span class="glyphicon glyphicon-save"></button>
 		      </div>
 					</form>
 		    </div>
@@ -249,7 +259,7 @@ if ($order_by == 'Desc') {
     </div>
 
     <!-- Table -->
-		Last edited by :
+		<?php echo "Last edited by : " .$_SESSION['users_name'];?>
 		<div class="table-responsive">
     <table class="table table-striped table-bordered table-condensed">
         <thead>
@@ -301,10 +311,11 @@ if ($order_by == 'Desc') {
 							<td><?php echo xss_clean($row['created_by']); ?></td>
 							<td><?php echo xss_clean($row['updated_by']); ?></td>
                 <td>
-                    <a href="edit_customer.php?transaksis_id=<?php echo $row['transaksi_id']; ?>&operation=edit" class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
+                    <a href="edit_customer.php?transaksis_id=<?php echo $row['transaksi_id']; ?>" class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i></a>
                     <a href="#" class="btn btn-danger delete_btn" data-toggle="modal" data-target="#confirm-delete-<?php echo $row['transaksi_id']; ?>"><i class="glyphicon glyphicon-trash"></i></a>
                 </td>
             </tr>
+
             <!-- Delete Confirmation Modal -->
             <div class="modal fade" id="confirm-delete-<?php echo $row['transaksi_id']; ?>" role="dialog">
                 <div class="modal-dialog modal-sm">
@@ -357,6 +368,28 @@ $(document).ready(function(){
         }
     });
 });
+
+//receiptimage
+function previewImage() {
+    document.getElementById("image-preview").style.display = "block";
+    var oFReader = new FileReader();
+     oFReader.readAsDataURL(document.getElementById("image-source").files[0]);
+
+    oFReader.onload = function(oFREvent) {
+      document.getElementById("image-preview").src = oFREvent.target.result;
+    };
+  };
+
+	//destinationimage
+	function previewImages() {
+	    document.getElementById("image-previews").style.display = "block";
+	    var oFReader = new FileReader();
+	     oFReader.readAsDataURL(document.getElementById("image-sources").files[0]);
+
+	    oFReader.onload = function(oFREvent) {
+	      document.getElementById("image-previews").src = oFREvent.target.result;
+	    };
+	  };
 </script>
 
 <?php include BASE_PATH . '/includes/footer.php';?>

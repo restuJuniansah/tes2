@@ -1,6 +1,5 @@
 <?php
 require_once './config/config.php';
-//require_once '../authenticate.php';
 
 //generate random string
 $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
