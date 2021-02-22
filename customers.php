@@ -12,6 +12,8 @@ $costumers = new Costumers();
 $search_string = filter_input(INPUT_GET, 'search_string');
 $filter_col = filter_input(INPUT_GET, 'filter_col');
 $order_by = filter_input(INPUT_GET, 'order_by');
+$date = filter_input(INPUT_GET, 'date1');
+$date2 = filter_input(INPUT_GET, 'date2');
 
 // Per page limit for pagination.
 $pagelimit = 5;
@@ -41,12 +43,18 @@ if ($search_string) {
 	$db->where('driver_name', '%' . $search_string . '%', 'like');
 	$db->orwhere('driver_channel', '%' . $search_string . '%', 'like');
 	$db->orwhere('store_name', '%' . $search_string . '%', 'like');
-	$db->orwhere('brand_name', '%' . $search_string . '%', 'like');
+	$db->orwhere('merchant_name', '%' . $search_string . '%', 'like');
 	$db->orwhere('kecamatan', '%' . $search_string . '%', 'like');
 	$db->orwhere('kelurahan', '%' . $search_string . '%', 'like');
 	$db->orwhere('building_name', '%' . $search_string . '%', 'like');
 	$db->orwhere('created_by', '%' . $search_string . '%', 'like');
 	$db->orwhere('updated_by', '%' . $search_string . '%', 'like');
+}
+else if ($date && $date2)
+{
+	$db->where('created_date', Array ('%' . $date. '%', '%' . $date2 . '%'), 'BETWEEN');
+
+	$tanggal=$db->get('per_transaction_gmv');
 }
 
 //If order by option selected
@@ -228,6 +236,7 @@ include BASE_PATH . '/includes/header.php';
             <input type="text" class="form-control" id="input_search" name="search_string" value="<?php echo xss_clean($search_string); ?>">
             <label for="input_order">Order By</label>
             <select name="filter_col" class="form-control">
+
                 <?php
 foreach ($costumers->setOrderingValues() as $opt_value => $opt_name):
 	($order_by === $opt_value) ? $selected = 'selected' : $selected = '';
@@ -247,6 +256,12 @@ if ($order_by == 'Desc') {
 }
 ?>>Desc</option>
             </select>
+
+  						<label for="example-date-input">Date From</label>
+    					<input class="form-control" type="date" value="2021-01-01" name="date1" value="<?php echo xss_clean($date); ?>">
+							<label for="example-date-input">To</label>
+    					<input class="form-control" type="date" value="2021-01-01" name="date2" value="<?php echo xss_clean($date2); ?>">
+
             <input type="submit" value="Go" class="btn btn-primary">
         </form>
     </div>
@@ -259,7 +274,12 @@ if ($order_by == 'Desc') {
     </div>
 
     <!-- Table -->
-		<?php echo "Last edited by : " .$_SESSION['users_name'];?>
+
+		<?php
+			$users = $db->getOne('last');
+			echo "Last Edited By: " .$users['name'];
+		?>
+
 		<div class="table-responsive">
     <table class="table table-striped table-bordered table-condensed">
         <thead>

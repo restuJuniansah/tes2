@@ -37,6 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     $data_to_store = array_filter($_POST);
 
     //Insert timestamp
+    $data_to_store['created_date'] = date('Y-m-d');
     $data_to_store['receipt_picture'] = $dst_db;
     $data_to_store['destination_picture'] = $dstt_db;
     $data_to_store['created_by']= $_SESSION['users_name'];
@@ -48,6 +49,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     if($last_id)
     {
     	$_SESSION['success'] = "Data Berhasil Di Simpan!";
+
+        $db = getDbInstance();
+        if($db->delete('last'));
+        $data = Array ("name" => $_SESSION['users_name']);
+        $id = $db->insert ('last', $data);
+
     	header('location: customers.php');
     	exit();
     }

@@ -81,6 +81,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     if($stat)
     {
         $_SESSION['success'] = "Data Berhasil di Update!";
+
+        $db = getDbInstance();
+        if($db->delete('last'));
+        $data = Array ("name" => $_SESSION['users_name']);
+        $id = $db->insert ('last', $data);
+        
         //Redirect to the listing page,
         header('location: customers.php');
         //Important! Don't execute the rest put the exit/die.
