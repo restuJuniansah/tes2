@@ -12,8 +12,7 @@ $costumers = new Costumers();
 $search_string = filter_input(INPUT_GET, 'search_string');
 $filter_col = filter_input(INPUT_GET, 'filter_col');
 $order_by = filter_input(INPUT_GET, 'order_by');
-$date = filter_input(INPUT_GET, 'date1');
-$date2 = filter_input(INPUT_GET, 'date2');
+$date = filter_input(INPUT_GET, 'date');
 
 // Per page limit for pagination.
 $pagelimit = 5;
@@ -50,11 +49,10 @@ if ($search_string) {
 	$db->orwhere('created_by', '%' . $search_string . '%', 'like');
 	$db->orwhere('updated_by', '%' . $search_string . '%', 'like');
 }
-else if ($date && $date2)
-{
-	$db->where('created_date', Array ('%' . $date. '%', '%' . $date2 . '%'), 'BETWEEN');
 
-	$tanggal=$db->get('per_transaction_gmv');
+if ($date)
+{
+	$db->where('created_date', '%' . $date . '%', 'like');
 }
 
 //If order by option selected
@@ -257,10 +255,8 @@ if ($order_by == 'Desc') {
 ?>>Desc</option>
             </select>
 
-  						<label for="example-date-input">Date From</label>
-    					<input class="form-control" type="date" value="2021-01-01" name="date1" value="<?php echo xss_clean($date); ?>">
-							<label for="example-date-input">To</label>
-    					<input class="form-control" type="date" value="2021-01-01" name="date2" value="<?php echo xss_clean($date2); ?>">
+  						<label for="example-date-input">Date</label>
+    					<input class="form-control" type="date" value="2021-01-01" name="date" value="<?php echo xss_clean($date);?>">
 
             <input type="submit" value="Go" class="btn btn-primary">
         </form>
